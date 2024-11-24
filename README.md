@@ -26,36 +26,38 @@ data without it.
 * Your SQLite database file must contain empty tables that match the
 schema and table definitions in the MySQL tables. 
 
-## Configuration
+## Usage
 
-Edit the `config.php` file to meet your needs.
+ Usage:
 
-Below is sample configuration to move all table data from a database 
-named `blog` in MySQL, to SQLite. You can either define an array of tables 
-you want to migrate, or leave the array empty to migrate ALL tables. 
+`php mysql2sqlite.php -h` generates this help screen.
+        
+`php mysql2sqlite.php -d=dbname -u=dbuser -p=pass -f=sqlite_file --tables=posts,users,comments`
 
-Note: You can use a relative or absolute path to the target SQLite
-database file
+* if you leave out **-p**, will assume no password required
+* if you leave out **-f**, will assume ./database.sqlite in current folder
+* if you leave out **--tables**, will assume all tables to be migrated
 
-```php
-return array (
-    'MYSQL_DBNAME' => 'bikemike', // database name
-    'MYSQL_DBUSER' => 'root', // database username
-    'MYSQL_DBPASS' => '', // database password
-    'SQLITE_DBFILE' => './database.sqlite', // path to sqlite file
-    'MYSQL_TABLES' => [], // leave empty to migrate all tables
-    // 'MYSQL_TABLES' => ['t1', 't2', 't3', 't4'], // or add specific tables
-);
-```
 
-## Run the utility
+**Examples:**
 
-Open a terminal where this file is located, and simply run the file as
-a PHP script.  On success, output will look something like this:
+All tables, no password:  
+    `php mysql2sqlite.php -d=blog -u=root -f=./blog.sqlite`
+
+Some tables, password required:  
+    `php mysql2sqlite.php -d=blog -u=root -p=mypass -f=./blog.sqlite --tables=posts,users`
+
+All tables, no password, **./database.sqlite** as sqlite file   
+    `php mysql2sqlite.php -d=blog -u=root`
+
+
+## Output
+
+
 
 ```bash
 
-php mysql2sqlite.php           
+php mysql2sqlite.php  -d=blog -u=root -f=./database.sqlite         
 
 Migrated posts!
 Migrated users!
