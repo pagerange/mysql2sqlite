@@ -14,10 +14,22 @@
 /* DO NOT EDIT BELOW THIS LINE!
 --------------------------------------------------------------------------- */
 
-require __DIR__ . '/config.php';
+$config =  require __DIR__ . '/config.php';
 
 class Mysql2Sqlite
 {
+
+    /**
+     * Configuration options
+     *
+     * @var array
+     */
+    private $c = [];
+
+    public function __construct(array $config) 
+    {
+        $this->c = $config;
+    }
 
     /**
      * getMySQLConnection
@@ -27,7 +39,9 @@ class Mysql2Sqlite
      */
     function getMysqlConnection():PDO
     {
-        $dbh = new PDO('mysql:host=localhost;dbname=' . MYSQL_DBNAME, MYSQL_DBUSER, MYSQL_DBPASS);
+        $dbh = new PDO('mysql:host=localhost;dbname=' . 
+            $this->c['MYSQL_DBNAME'], 
+            $this->c['MYSQL_DBUSER'], $this->c['MYSQL_DBPASS']);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         return $dbh;
@@ -40,7 +54,7 @@ class Mysql2Sqlite
      */
     function getSqliteConnection():PDO
     {
-        $dbh = new PDO('sqlite:' . SQLITE_DBFILE);
+        $dbh = new PDO('sqlite:' . $this->c['SQLITE_DBFILE']);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         return $dbh;
@@ -164,8 +178,8 @@ class Mysql2Sqlite
     {
         $str = "";
         $str .= "\n";
-        if(!empty(MYSQL_TABLES)) {
-            $tables = MYSQL_TABLES;
+        if(!empty($this->c['MYSQL_TABLES'])) {
+            $tables = $this->c['MYSQL_TABLES'];
         } else {
             $tables = $this->getTableList();
         }
@@ -182,7 +196,7 @@ class Mysql2Sqlite
 
 // Run the application
 
-$mysql2sqlite = new Mysql2Sqlite();
+$mysql2sqlite = new Mysql2Sqlite($config);
 
 try {
 
