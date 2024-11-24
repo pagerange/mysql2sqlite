@@ -32,7 +32,7 @@ schema and table definitions in the MySQL tables.
 
 `php mysql2sqlite.php -h` generates this help screen.
         
-`php mysql2sqlite.php -d=dbname -u=dbuser -p=pass -f=sqlite_file --tables=posts,users,comments`
+`php mysql2sqlite.php -d=dbname -u=dbuser -p=dbpass -f=file.sqlite --tables=posts,users,comments`
 
 * if you leave out **-p**, will assume no password required
 * if you leave out **-f**, will assume ./database.sqlite in current folder
