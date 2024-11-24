@@ -3,7 +3,7 @@
 /**
  * MySQL2SQLite 
  * 
- * This is a simple utility to migrate data from 
+ * This is a simple PHP CLI utility to migrate data from 
  * MySQL tables to SQLite tables.
  * 
  * @author steve@pagerange.com
@@ -14,7 +14,45 @@
 /* DO NOT EDIT BELOW THIS LINE!
 --------------------------------------------------------------------------- */
 
-$config =  require __DIR__ . '/config.php';
+// Capture command line options
+$opts = getopt("d:u:f:p:h1:",['tables:']);
+
+if(isset($opts['h']) || empty($opts['d']) || empty($opts['u'])) {
+    echo <<<EOT
+
+        Usage:
+        
+        php mysql2sqlite.php -d=dbname -u=dbuser -p=pass -f=sqlite_file --tables=posts,users,comments 
+
+        if you leave out -p, will assume no password required
+        if you leave out -f, will assume ./database.sqlite in current folder
+        if you leave out --tables, will assume all tables to be migrated
+
+
+        Examples:
+
+        All tables, no password:
+            php mysql2sqlite.php -d=blog -u=root -f=./blog.sqlite 
+
+        Some tables, password required:
+            php mysql2sqlite.php -d=blog -u=root -p=mypass -f=./blog.sqlite --tables="posts,users"
+
+        All tables, no password, ./database.sqlite 
+            php mysql2sqlite.php -d=blog -u=root
+
+
+    EOT;
+    die;
+}
+
+$config = array (
+    'MYSQL_DBNAME' => $opts['d'], 
+    'MYSQL_DBUSER' => $opts['u'], 
+    'MYSQL_DBPASS' => $opts['p'] ?? '',
+    'SQLITE_DBFILE' => $opts['f'] ?? './database.sqlite',
+    'MYSQL_TABLES' => !empty($opts['tables']) ? explode(',', $opts['tables']) : []
+);
+
 
 class Mysql2Sqlite
 {
@@ -166,8 +204,6 @@ class Mysql2Sqlite
             $stmt->execute($params);
         }
     }
-
-
 
     /**
      * Run the application
