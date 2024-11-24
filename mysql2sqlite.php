@@ -35,28 +35,28 @@ class Mysql2Sqlite
      * getMySQLConnection
      * 
      *
-     * @return PDO Object for MySQL connection
+     * @return \PDO Object for MySQL connection
      */
-    function getMysqlConnection():PDO
+    function getMysqlConnection():\PDO
     {
-        $dbh = new PDO('mysql:host=localhost;dbname=' . 
+        $dbh = new \PDO('mysql:host=localhost;dbname=' . 
             $this->c['MYSQL_DBNAME'], 
             $this->c['MYSQL_DBUSER'], $this->c['MYSQL_DBPASS']);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $dbh->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
         return $dbh;
     }
 
     /**
      * getSQLiteConnection
      *
-     * @return PDO Object of SQLite connection
+     * @return \PDO Object of SQLite connection
      */
-    function getSqliteConnection():PDO
+    function getSqliteConnection():\PDO
     {
-        $dbh = new PDO('sqlite:' . $this->c['SQLITE_DBFILE']);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $dbh = new \PDO('sqlite:' . $this->c['SQLITE_DBFILE']);
+        $dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $dbh->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
         return $dbh;
     }
 
