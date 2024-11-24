@@ -17,10 +17,10 @@ is set to sqlite in your `.env` file.
 you want to migrate data.
 * You must have PHP in your system, and in your path, so that it can be
 executed from the shell.
-* You must have both mysql, PDO, and SQLite extensions installed in your
+* You must have the mysql, PDO, and SQLite extensions installed in your
 version of PHP.
 * You should have the SQLite binary on your system and in your path so you 
-can check the database one the data has been migrated.  Note: this utility
+can check the database once the data has been migrated.  Note: this utility
 will work fine without it, but you won't be able to check your migrated
 data without it.
 * Your SQLite database file must contain empty tables that match the
