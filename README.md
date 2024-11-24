@@ -1,6 +1,6 @@
 # Mysql2Sqlite
 
-This is a simple utility to migrate data in a MySQL database to a SQLite 
+This is a simple PHP CLI utility to migrate data in a MySQL database to a SQLite 
 database.  I wrote this for myself to use in a pinch, but feel free to use
 it if it meets your needs.
 
